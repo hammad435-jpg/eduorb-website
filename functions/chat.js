@@ -38,7 +38,7 @@ exports.handler = async (event) => {
     "If a question is not related to studies/school subjects, politely say you can only help with study doubts.";
 
   try {
-    const model = "gemini-2.6-flash";
+    const model = "gemini-3.6-flash";
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
     const response = await fetch(url, {
