@@ -81,50 +81,125 @@
   .tab.active{background:var(--teal); color:var(--white); border-color:var(--teal);}
   .tab:hover:not(.active){border-color:var(--teal);}
 
-  /* Hero */
+  /* Hero — dark split layout */
   .hero{
     position:relative; overflow:hidden;
-    padding:120px 24px 90px; border-bottom:1px solid var(--line);
-    display:flex; flex-direction:column; align-items:center; text-align:center;
-    background:var(--paper);
+    padding:0; background:var(--teal); border-bottom:1px solid var(--teal-dark);
   }
-  .hero-deco{position:absolute; inset:0; pointer-events:none; z-index:0;}
+  .hero-deco{position:absolute; inset:0; pointer-events:none; z-index:0; opacity:0.5;}
   .hero-deco svg{position:absolute;}
-  .hero > *:not(.hero-deco){position:relative; z-index:1;}
+  .hero-grid{
+    position:relative; z-index:1; max-width:1160px; margin:0 auto;
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:48px; align-items:center;
+    padding:96px 24px;
+  }
   .hero-eyebrow{
-    font-size:0.85rem; font-weight:600; color:var(--teal);
-    background:color-mix(in srgb, #013328 9%, var(--paper));
-    border:1px solid color-mix(in srgb, #013328 18%, var(--paper));
-    padding:7px 16px; border-radius:20px; margin-bottom:28px;
+    font-size:0.82rem; font-weight:600; color:var(--gold);
+    background:color-mix(in srgb, #E3DCD2 10%, transparent);
+    border:1px solid color-mix(in srgb, #E3DCD2 22%, transparent);
+    padding:7px 16px; border-radius:20px; margin-bottom:24px; display:inline-block;
   }
   .hero h1{
-    font-size:3.5rem; max-width:840px; letter-spacing:-0.015em;
+    font-size:3.1rem; line-height:1.12; letter-spacing:-0.015em; color:var(--on-dark);
   }
-  .hero h1 .accent{
-    color:var(--gold); font-style:italic; position:relative;
-  }
+  .hero h1 .accent{ color:var(--gold); font-style:italic; }
   .hero p{
-    color:var(--ink-soft); max-width:560px; margin:22px auto 0; font-size:1.12rem;
+    color:color-mix(in srgb, #E3DCD2 78%, #013328 22%);
+    max-width:480px; margin:20px 0 0; font-size:1.05rem;
   }
   .hero-cta{
-    margin-top:38px; display:inline-flex; align-items:center; gap:10px;
-    background:var(--teal); color:var(--on-dark); border:none;
-    font-family:inherit; font-size:1rem; font-weight:600;
-    padding:16px 34px; border-radius:9px; cursor:pointer;
-    box-shadow:0 10px 30px -10px color-mix(in srgb, #013328 60%, transparent);
-    transition:background .18s, transform .18s, box-shadow .18s;
+    margin-top:32px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--gold); color:var(--ink); border:none;
+    font-family:inherit; font-size:1rem; font-weight:700;
+    padding:15px 32px; border-radius:9px; cursor:pointer;
+    box-shadow:0 12px 28px -10px color-mix(in srgb, #100C0D 55%, transparent);
+    transition:transform .18s, box-shadow .18s;
   }
-  .hero-cta:hover{background:var(--teal-dark); transform:translateY(-2px); box-shadow:0 14px 34px -8px color-mix(in srgb, #013328 65%, transparent);}
+  .hero-cta:hover{transform:translateY(-2px);}
   .hero-cta svg{flex-shrink:0;}
-  .hero-stats{
-    display:flex; gap:36px; margin-top:56px; flex-wrap:wrap; justify-content:center;
+
+  .hero-card{
+    background:var(--paper); border-radius:18px; padding:32px 28px;
+    box-shadow:0 30px 60px -20px color-mix(in srgb, #100C0D 45%, transparent);
+    position:relative; z-index:1;
   }
-  .hero-stats .stat{text-align:center;}
+  .hero-card-title{
+    font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:20px;
+  }
+  .hero-stats{ display:flex; flex-direction:column; gap:18px; }
+  .hero-stats .stat{
+    display:flex; align-items:baseline; justify-content:space-between;
+    padding-bottom:16px; border-bottom:1px solid var(--line);
+  }
+  .hero-stats .stat:last-child{border-bottom:none; padding-bottom:0;}
   .hero-stats .stat b{
-    display:block; font-family:'Source Serif 4', serif; font-size:1.6rem; color:var(--ink);
+    font-family:'Source Serif 4', serif; font-size:1.9rem; color:var(--teal);
   }
-  .hero-stats .stat span{font-size:0.8rem; color:var(--ink-soft);}
-  .hero-stats .divider{width:1px; background:var(--line); align-self:stretch;}
+  .hero-stats .stat span{font-size:0.85rem; color:var(--ink-soft); text-align:right;}
+
+  /* Ticker (marquee) */
+  .ticker-wrap{
+    border-bottom:1px solid var(--line); background:var(--paper-2);
+    overflow:hidden; padding:12px 0; white-space:nowrap;
+  }
+  .ticker-track{
+    display:inline-flex; gap:0; animation:ticker-scroll 28s linear infinite;
+  }
+  .ticker-track span{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:0.82rem; font-weight:600; color:var(--teal); letter-spacing:0.02em;
+    padding:0 28px; white-space:nowrap;
+  }
+  .ticker-track span::after{content:"•"; color:var(--gold); margin-left:28px;}
+  @keyframes ticker-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+  }
+
+  /* Scroll reveal */
+  .reveal{
+    opacity:0; transform:translateY(22px);
+    transition:opacity .7s ease, transform .7s ease;
+  }
+  .reveal.in-view{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in-view .subject-card{opacity:1; transform:translateY(0);}
+  .reveal-stagger .subject-card{
+    opacity:0; transform:translateY(16px);
+    transition:opacity .5s ease, transform .5s ease;
+  }
+  .reveal-stagger.in-view .subject-card:nth-child(1){transition-delay:.03s;}
+  .reveal-stagger.in-view .subject-card:nth-child(2){transition-delay:.07s;}
+  .reveal-stagger.in-view .subject-card:nth-child(3){transition-delay:.11s;}
+  .reveal-stagger.in-view .subject-card:nth-child(4){transition-delay:.15s;}
+  .reveal-stagger.in-view .subject-card:nth-child(5){transition-delay:.19s;}
+  .reveal-stagger.in-view .subject-card:nth-child(6){transition-delay:.23s;}
+  .reveal-stagger.in-view .subject-card:nth-child(7){transition-delay:.27s;}
+  .reveal-stagger.in-view .subject-card:nth-child(8){transition-delay:.31s;}
+  .reveal-stagger.in-view .subject-card:nth-child(9){transition-delay:.35s;}
+
+  /* Story section */
+  .story{
+    padding:64px 24px; border-bottom:1px solid var(--line);
+    background:var(--paper);
+  }
+  .story-inner{
+    max-width:760px; margin:0 auto; text-align:center;
+  }
+  .story-eyebrow{
+    font-size:0.8rem; font-weight:600; color:var(--gold); letter-spacing:0.06em;
+    text-transform:uppercase; margin-bottom:14px; display:block;
+  }
+  .story h2{
+    font-size:1.9rem; line-height:1.3; margin-bottom:18px;
+  }
+  .story h2 em{color:var(--teal); font-style:italic;}
+  .story p{
+    font-size:1.02rem; color:var(--ink-soft); line-height:1.7;
+  }
 
   /* Ad slot */
   .ad-slot{
@@ -279,10 +354,9 @@
     .layout{grid-template-columns:1fr;}
     .header-row{flex-wrap:wrap;}
     .search-box{order:3; max-width:100%; margin-top:8px;}
-    .hero{padding:80px 20px 56px;}
+    .hero-grid{grid-template-columns:1fr; padding:64px 20px; gap:32px;}
     .hero h1{font-size:2.1rem;}
     .hero p{font-size:1rem;}
-    .hero-stats{gap:20px;}
     .hero-deco{display:none;}
   }  /* Chat widget */
   .chat-fab{
@@ -348,7 +422,7 @@
 <section class="hero">
   <div class="hero-deco">
     <!-- open book, top-left -->
-    <svg width="120" height="90" viewBox="0 0 120 90" style="top:64px; left:6%; opacity:0.16;" fill="none" stroke="#013328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="120" height="90" viewBox="0 0 120 90" style="top:40px; left:4%; opacity:0.14;" fill="none" stroke="#E3DCD2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M60 20 C48 12 30 10 12 14 V72 C30 68 48 70 60 78 C72 70 90 68 108 72 V14 C90 10 72 12 60 20 Z"/>
       <path d="M60 20 V78"/>
       <path d="M22 26 C34 23 46 24 52 28" stroke-width="1.5"/>
@@ -356,44 +430,44 @@
       <path d="M68 28 C74 24 86 23 98 26" stroke-width="1.5"/>
       <path d="M68 42 C74 38 86 37 98 40" stroke-width="1.5"/>
     </svg>
-    <!-- ruled notebook lines, top-right -->
-    <svg width="130" height="100" viewBox="0 0 130 100" style="top:52px; right:7%; opacity:0.15; transform:rotate(6deg);" fill="none" stroke="#CC8B65" stroke-width="2" stroke-linecap="round">
-      <rect x="8" y="8" width="114" height="84" rx="8"/>
-      <line x1="8" y1="34" x2="122" y2="34"/>
-      <line x1="26" y1="52" x2="94" y2="52"/>
-      <line x1="26" y1="66" x2="106" y2="66"/>
-      <line x1="26" y1="80" x2="80" y2="80"/>
-    </svg>
     <!-- pencil, bottom-left -->
-    <svg width="90" height="90" viewBox="0 0 90 90" style="bottom:26px; left:9%; opacity:0.16; transform:rotate(-18deg);" fill="none" stroke="#013328" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg width="90" height="90" viewBox="0 0 90 90" style="bottom:16px; left:8%; opacity:0.14; transform:rotate(-18deg);" fill="none" stroke="#CC8B65" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M20 70 L60 30 L74 44 L34 84 L16 88 Z"/>
       <path d="M60 30 L52 22 L66 8 L80 22 Z"/>
       <path d="M34 84 L20 70"/>
       <line x1="56" y1="34" x2="70" y2="48" stroke-width="1.5"/>
     </svg>
-    <!-- graduation cap, bottom-right -->
-    <svg width="110" height="80" viewBox="0 0 110 80" style="bottom:34px; right:10%; opacity:0.17;" fill="none" stroke="#CC8B65" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M6 26 L55 8 L104 26 L55 44 Z"/>
-      <path d="M28 34 V54 C28 62 40 68 55 68 C70 68 82 62 82 54 V34" />
-      <path d="M96 30 V52" stroke-width="1.5"/>
-      <circle cx="96" cy="56" r="3" fill="#CC8B65" stroke="none"/>
-    </svg>
   </div>
-  <div class="wrap" style="display:flex; flex-direction:column; align-items:center;">
-    <span class="hero-eyebrow">Maharashtra Board · Classes 8-12</span>
-    <h1>Everything You Need to <span class="accent">Learn Better.</span></h1>
-    <p>Study, practice, and improve with Edu-Orb — your complete learning platform for Maharashtra Board students.</p>
-    <button class="hero-cta" onclick="document.getElementById('subjectGrid').scrollIntoView({behavior:'smooth', block:'start'})">
-      Explore Resources
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-    </button>
-    <div class="hero-stats">
-      <div class="stat"><b>8–12</b><span>Classes covered</span></div>
-      <div class="divider"></div>
-      <div class="stat"><b>17</b><span>Subjects</span></div>
-      <div class="divider"></div>
-      <div class="stat"><b>2019–26</b><span>PYQ archive</span></div>
+  <div class="hero-grid">
+    <div>
+      <span class="hero-eyebrow">Maharashtra Board · Classes 8-12</span>
+      <h1>Everything You Need to <span class="accent">Learn Better.</span></h1>
+      <p>Study, practice, and improve with Edu-Orb — your complete learning platform for Maharashtra Board students.</p>
+      <button class="hero-cta" onclick="document.getElementById('subjectGrid').scrollIntoView({behavior:'smooth', block:'start'})">
+        Explore Resources
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
     </div>
+    <div class="hero-card reveal">
+      <div class="hero-card-title">Edu-Orb at a glance</div>
+      <div class="hero-stats">
+        <div class="stat"><b>8–12</b><span>Classes covered</span></div>
+        <div class="stat"><b data-count="17">0</b><span>Subjects</span></div>
+        <div class="stat"><b>2019–26</b><span>PYQ archive</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<section class="story">
+  <div class="story-inner reveal">
+    <span class="story-eyebrow">Why Edu-Orb</span>
+    <h2>Built by students who <em>wished this existed</em> when they needed it most.</h2>
+    <p>No logins, no clutter, no chasing scattered PDFs across ten different Telegram groups — just notes, papers and practice, organised the way a student would actually want them.</p>
   </div>
 </section>
 
@@ -406,7 +480,7 @@
         <h2 id="classHeading">Class 10 — Subjects</h2>
         <span id="subjectCount"></span>
       </div>
-      <div class="subject-grid" id="subjectGrid"></div>
+      <div class="subject-grid reveal-stagger" id="subjectGrid"></div>
 
       <div class="resource-panel" id="resourcePanel">
         <div class="rp-head">
@@ -434,7 +508,7 @@
 
     <aside class="sidebar">
       <div class="sidebar-card">
-        <h3>Board Papers</h3>
+        <h3>PYQ</h3>
         <ul>
           <li>SSC (Class 10) — by year</li>
           <li>HSC (Class 12) — by year</li>
@@ -443,7 +517,6 @@
       <div class="sidebar-card">
         <h3>Quick Links</h3>
         <ul>
-          <li>PYQ (2019–2026) — Class 10 & 12</li>
           <li>Question Bank — Class 10 & 12</li>
           <li>Sample Papers — Class 8, 9, 11</li>
         </ul>
@@ -524,8 +597,8 @@ const classData = {
   "8": { subjects: ["English","Hindi","Marathi","Mathematics 1","Mathematics 2","Science","History","Geography"] },
   "9": { subjects: ["English","Hindi","Marathi","Mathematics 1","Mathematics 2","Science","History","Geography"] },
   "10": { subjects: ["English","Hindi","Marathi","Mathematics 1","Mathematics 2","Science","History","Geography"] },
-  "11": { subjects: ["Physics","Chemistry","Mathematics","Biology","Computer","Information Technology","Electronics","Fisheries","English"] },
-  "12": { subjects: ["Physics","Chemistry","Mathematics","Biology","Computer","Information Technology","Electronics","Fisheries","English"] },
+  "11": { subjects: ["Physics","Chemistry","Mathematics","Biology","English","Information Technology","Electronics","Fisheries","Computer"] },
+  "12": { subjects: ["Physics","Chemistry","Mathematics","Biology","English","Information Technology","Electronics","Fisheries","Computer"] },
 };
 
 const icons = ["📘","📗","📙","📕","📖","🧪","🔬","🧮","💻","🌍","📐","🧬"];
@@ -585,7 +658,6 @@ const resourceTypesFull = {
   "PYQ": generateYearList("PYQ"),
   "PYQ Solutions": generateYearList("PYQ Solution"),
   "Question Bank": ["Govt. Question Bank — Full Set","Chapter-wise Question Bank","MCQ Bank","Important Questions"],
-  "Board Papers": generateYearList("Board Paper"),
   "Textbook": ["Full Textbook PDF","Chapter-wise Textbook Pages","Textbook Solutions"]
 };
 
@@ -611,7 +683,7 @@ const pdfLinks = {
 // Small icon per resource type, for visual scanning
 const typeIcons = {
   "Notes": "📝", "PYQ": "🗂️", "PYQ Solutions": "✅", "Question Bank": "📚",
-  "Board Papers": "🗞️", "Sample Papers": "🧾", "Textbook": "📖"
+  "Sample Papers": "🧾", "Textbook": "📖"
 };
 
 let currentType = "Notes";
@@ -721,6 +793,60 @@ async function sendQuestion(){
 
 chatSend.onclick = sendQuestion;
 chatInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') sendQuestion(); });
+
+// ---- Ticker (marquee) ----
+const tickerItems = ["Notes", "PYQ", "PYQ Solutions", "Question Bank", "Sample Papers", "Textbook"];
+const tickerTrack = document.getElementById('tickerTrack');
+if(tickerTrack){
+  const looped = [...tickerItems, ...tickerItems]; // duplicate for seamless loop
+  tickerTrack.innerHTML = looped.map(t => `<span>${t}</span>`).join('');
+}
+
+// ---- Scroll reveal ----
+const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+if('IntersectionObserver' in window){
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => revealObserver.observe(el));
+}else{
+  revealEls.forEach(el => el.classList.add('in-view'));
+}
+
+// ---- Animated counters ----
+function animateCount(el){
+  const target = parseInt(el.dataset.count, 10);
+  if(isNaN(target)) return;
+  const duration = 900;
+  const start = performance.now();
+  function tick(now){
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target);
+    if(progress < 1) requestAnimationFrame(tick);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(tick);
+}
+const countEls = document.querySelectorAll('[data-count]');
+if('IntersectionObserver' in window && countEls.length){
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        animateCount(entry.target);
+        countObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  countEls.forEach(el => countObserver.observe(el));
+}else{
+  countEls.forEach(el => { el.textContent = el.dataset.count; });
+}
 </script>
 </body>
 </html>
